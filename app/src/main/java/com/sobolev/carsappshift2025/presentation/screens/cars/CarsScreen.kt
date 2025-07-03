@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sobolev.carsappshift2025.R
+import com.sobolev.carsappshift2025.domain.entities.Car
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +47,8 @@ fun CarsScreen(
     onCarClick: () -> Unit,
     onButtonClick: () -> Unit,
     onQueryChange: (String) -> Unit,
-    onCalendarClick: () -> Unit
+    onCalendarClick: () -> Unit,
+    cars: List<Car>
 ) {
 
     Scaffold(
@@ -86,8 +89,14 @@ fun CarsScreen(
                 Spacer(modifier = modifier.height(14.dp))
             }
 
-            item {
+            itemsIndexed(
+                items = cars,
+                key = {_, car: Car -> car.id}
+            ) { index, car ->
                 CarCard(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    car = car,
                     onCarClick = onCarClick
                 )
             }
@@ -262,11 +271,7 @@ private fun SearchFilters(
 @Composable
 fun CarCard(
     modifier: Modifier = Modifier,
-    carName: String = "Chery Arrizo 8",
-    transmission: String = "Автомат",
-    engine: String = "2.5л",
-    pricePerDay: String = "5 000 ₽",
-    pricePer14Days: String = "70 000 ₽ за 14 дней",
+    car: Car,
     onCarClick: () -> Unit
 ) {
     Card(
@@ -298,23 +303,23 @@ fun CarCard(
 
             Column {
                 Text(
-                    text = carName,
+                    text = car.name,
                     fontWeight = FontWeight(500),
                 )
                 Text(
-                    text = "$transmission, $engine",
+                    text = car.transmission,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary,
                     fontSize = 14.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = pricePerDay,
+                    text = "${car.price} ₽",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = pricePer14Days,
+                    text = "${car.price * 14} ₽ за 14 дней",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary
                 )
