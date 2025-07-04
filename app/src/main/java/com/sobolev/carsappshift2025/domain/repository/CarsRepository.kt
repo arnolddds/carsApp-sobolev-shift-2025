@@ -9,4 +9,6 @@ interface CarsRepository {
 
 
     suspend fun getCar(carId: Int): Car
+
+    suspend fun refreshCars()
 }
