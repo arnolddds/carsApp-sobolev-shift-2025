@@ -1,6 +1,5 @@
-package com.sobolev.carsappshift2025.ui.theme
+package com.sobolev.carsappshift2025.presentation.theme.ui
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,15 +11,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = White,
+    secondary = Grey200,
+    onSecondary = Grey300,
+    tertiary = Red200,
+    onTertiary = Grey300,
+    onPrimaryContainer = Black,
+    primaryContainer = White,
+    background = Blue300
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Black,
+    secondary = Grey400,
+    onSecondary = Grey300,
+    tertiary = Red100,
+    onTertiary = Grey300,
+    primaryContainer = Blue100,
+    onPrimaryContainer = White,
+    background = White
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -37,7 +46,7 @@ private val LightColorScheme = lightColorScheme(
 fun CarsAppShift2025Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

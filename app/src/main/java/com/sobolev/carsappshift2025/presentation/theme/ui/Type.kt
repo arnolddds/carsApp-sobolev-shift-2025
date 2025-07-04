@@ -1,4 +1,4 @@
-package com.sobolev.carsappshift2025.ui.theme
+package com.sobolev.carsappshift2025.presentation.theme.ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
