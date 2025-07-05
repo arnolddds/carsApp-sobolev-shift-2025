@@ -4,7 +4,7 @@ data class Car(
     val id: Int,
     val name: String,
     val brand: String,
-    val image: Media,
+    val image: List<Media>,
     val transmission: String,
     val price: Int,
     val location: String,
