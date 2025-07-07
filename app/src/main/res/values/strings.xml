@@ -5,4 +5,6 @@
     <string name="leasing_data">Выберите период аренды</string>
     <string name="date">Даты аренды</string>
     <string name="filters_button">Фильтры</string>
+    <string name="back_button">Назад</string>
+    <string name="book_button">Забрронировать</string>
 </resources>

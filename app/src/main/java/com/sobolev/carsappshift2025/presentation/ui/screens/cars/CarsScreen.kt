@@ -323,7 +323,7 @@ fun CarCard(
 
 
             AsyncImage(
-                model = "https://shift-intensive.ru/api" + car.image.first { it.isCover }.url,
+                model = "https://shift-intensive.ru/api" + car.media.first { it.isCover }.url,
                 contentDescription = car.name,
                 modifier = Modifier
                     .size(100.dp)

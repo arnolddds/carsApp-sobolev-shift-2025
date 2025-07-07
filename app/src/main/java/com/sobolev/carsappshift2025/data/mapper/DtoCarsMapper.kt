@@ -11,7 +11,7 @@ fun CarDto.toDomain(): Car {
         id = id,
         name = name,
         brand = brand,
-        image = image.map { it.toDomain() },
+        media = image.map { it.toDomain() },
         transmission = transmission,
         price = price,
         location = location,

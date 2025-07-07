@@ -12,5 +12,6 @@ data class CarDto(
     @SerializedName("location") val location: String,
     @SerializedName("color") val color: String,
     @SerializedName("bodyType") val bodyType: String,
-    @SerializedName("steering") val steering: String
+    @SerializedName("steering") val steering: String,
+    @SerializedName("rents") val rents: List<String> = emptyList()
 )
