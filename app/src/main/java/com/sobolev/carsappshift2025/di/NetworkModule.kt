@@ -3,6 +3,9 @@ package com.sobolev.carsappshift2025.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sobolev.carsappshift2025.data.network.ApiService
+import com.sobolev.carsappshift2025.data.repository.CarsRepositoryImpl
+import com.sobolev.carsappshift2025.domain.repository.CarsRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +24,17 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideGson(): Gson = GsonBuilder().create()
+
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class RepositoryModule {
+
+        @Binds
+        abstract fun bindCarsRepository(
+            impl: CarsRepositoryImpl
+        ): CarsRepository
+    }
 
 
 

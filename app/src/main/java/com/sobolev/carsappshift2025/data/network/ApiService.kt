@@ -11,7 +11,7 @@ interface ApiService {
 
     @GET("cars/info/{carId}")
     suspend fun getCarById(
-        @Path("carId") carId: String
+        @Path("carId") carId: Int
     ): CarsResponse
 
 }

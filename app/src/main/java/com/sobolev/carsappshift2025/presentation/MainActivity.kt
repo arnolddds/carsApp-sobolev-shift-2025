@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.sobolev.carsappshift2025.domain.entities.Car
-import com.sobolev.carsappshift2025.domain.entities.Media
-import com.sobolev.carsappshift2025.presentation.screens.cars.CarsScreen
-import com.sobolev.carsappshift2025.presentation.theme.ui.CarsAppShift2025Theme
+import com.sobolev.carsappshift2025.presentation.ui.screens.cars.CarsScreen
+import com.sobolev.carsappshift2025.presentation.ui.theme.CarsAppShift2025Theme
 import dagger.hilt.android.AndroidEntryPoint
 
 

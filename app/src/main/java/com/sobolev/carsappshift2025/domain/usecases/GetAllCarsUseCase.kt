@@ -10,5 +10,5 @@ class GetAllCarsUseCase @Inject constructor(
     private val repository: CarsRepository
 ) {
 
-    operator fun invoke(): Flow<List<Car>> = repository.getAllCars()
+    suspend operator fun invoke(): List<Car> = repository.getAllCars()
 }
