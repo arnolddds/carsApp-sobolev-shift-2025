@@ -7,6 +7,6 @@ interface CarsRepository {
     suspend fun getAllCars(): List<Car>
 
 
-    suspend fun getCar(carId: Int): List<Car>
+    suspend fun getCar(carId: String): Car
 
 }

@@ -32,7 +32,9 @@ class MainActivity : ComponentActivity() {
 //                    }
 //
 //                )
-                CarDetailsScreen()
+                CarDetailsScreen(
+                    carId = "1"
+                )
             }
         }
     }

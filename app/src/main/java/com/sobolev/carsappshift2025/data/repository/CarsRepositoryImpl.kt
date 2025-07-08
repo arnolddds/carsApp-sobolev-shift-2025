@@ -14,8 +14,8 @@ class CarsRepositoryImpl @Inject constructor(
         return apiService.getAllCars().cars.map { it.toDomain() }
     }
 
-    override suspend fun getCar(carId: Int): List<Car> {
-        return apiService.getCarById(carId.toInt()).cars.map { it.toDomain() }
+    override suspend fun getCar(carId: String): Car {
+        return apiService.getCarById(carId).car.toDomain()
     }
 
 }

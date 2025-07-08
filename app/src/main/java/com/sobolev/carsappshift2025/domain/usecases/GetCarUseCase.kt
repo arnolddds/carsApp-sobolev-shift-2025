@@ -8,7 +8,7 @@ class GetCarUseCase @Inject constructor(
     private val repository: CarsRepository
 ) {
 
-    suspend operator fun invoke(carId: Int): List<Car> {
+    suspend operator fun invoke(carId: String): Car {
         return repository.getCar(carId)
     }
 }

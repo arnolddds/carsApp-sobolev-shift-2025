@@ -3,7 +3,7 @@ package com.sobolev.carsappshift2025.data.network.dto
 import com.google.gson.annotations.SerializedName
 
 data class CarDto(
-    @SerializedName("id") val id: Int,
+    @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("brand") val brand: String,
     @SerializedName("media") val image: List<MediaDto>,

@@ -1,7 +1,7 @@
 package com.sobolev.carsappshift2025.domain.entities
 
 data class Car(
-    val id: Int,
+    val id: String,
     val name: String,
     val brand: String,
     val media: List<Media>,
