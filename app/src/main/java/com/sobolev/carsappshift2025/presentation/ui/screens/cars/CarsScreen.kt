@@ -54,10 +54,7 @@ import com.sobolev.carsappshift2025.presentation.presentation.UsersViewModel
 @Composable
 fun CarsScreen(
     modifier: Modifier = Modifier,
-    onCarClick: () -> Unit,
-    onButtonClick: () -> Unit,
-    onQueryChange: (String) -> Unit,
-    onCalendarClick: () -> Unit,
+    onCarClick: (Car) -> Unit,
     viewModel: UsersViewModel = hiltViewModel()
 ) {
     val state by viewModel.screenState.collectAsState()
@@ -81,9 +78,11 @@ fun CarsScreen(
         }
     ) { innerPadding ->
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
 
             when (state) {
 
@@ -109,9 +108,9 @@ fun CarsScreen(
 
                         item {
                             SearchFilters(
-                                onButtonClick = onButtonClick,
-                                onQueryChange = onQueryChange,
-                                onCalendarClick = onCalendarClick
+                                onButtonClick = {},
+                                onQueryChange = {},
+                                onCalendarClick = {}
                             )
                         }
 
@@ -124,7 +123,7 @@ fun CarsScreen(
                             CarCard(
                                 modifier = modifier.fillMaxWidth(),
                                 car = car,
-                                onCarClick = onCarClick
+                                onCarClick = { onCarClick(car) }
                             )
                         }
 
@@ -135,7 +134,6 @@ fun CarsScreen(
         }
     }
 }
-
 
 
 @Composable
@@ -301,13 +299,13 @@ private fun SearchFilters(
 fun CarCard(
     modifier: Modifier = Modifier,
     car: Car,
-    onCarClick: () -> Unit
+    onCarClick: (Car) -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clickable { onCarClick },
+            .clickable { onCarClick(car) },
         shape = RoundedCornerShape(12.dp),
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.background,
