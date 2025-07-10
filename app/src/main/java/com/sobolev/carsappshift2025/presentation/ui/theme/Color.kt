@@ -1,4 +1,4 @@
-package com.sobolev.carsappshift2025.presentation.theme.ui
+package com.sobolev.carsappshift2025.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

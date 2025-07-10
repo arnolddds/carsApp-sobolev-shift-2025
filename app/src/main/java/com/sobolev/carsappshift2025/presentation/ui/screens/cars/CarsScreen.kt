@@ -1,6 +1,5 @@
-package com.sobolev.carsappshift2025.presentation.screens.cars
+package com.sobolev.carsappshift2025.presentation.ui.screens.cars
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +33,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -45,18 +47,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.sobolev.carsappshift2025.R
 import com.sobolev.carsappshift2025.domain.entities.Car
+import com.sobolev.carsappshift2025.presentation.presentation.CarsScreenState
+import com.sobolev.carsappshift2025.presentation.presentation.UsersViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarsScreen(
     modifier: Modifier = Modifier,
-    onCarClick: () -> Unit,
-    onButtonClick: () -> Unit,
-    onQueryChange: (String) -> Unit,
-    onCalendarClick: () -> Unit,
+    onCarClick: (Car) -> Unit,
     viewModel: UsersViewModel = hiltViewModel()
 ) {
-
     val state by viewModel.screenState.collectAsState()
 
     Scaffold(
@@ -78,42 +78,61 @@ fun CarsScreen(
         }
     ) { innerPadding ->
 
-        LazyColumn(
-            contentPadding = innerPadding
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
         ) {
 
-            item {
-               Spacer(modifier = modifier.height(14.dp))
-            }
+            when (state) {
 
-            item {
-                SearchFilters(
-                    onButtonClick = onButtonClick,
-                    onQueryChange = onQueryChange,
-                    onCalendarClick = onCalendarClick
-                )
-            }
-            item {
-                Spacer(modifier = modifier.height(14.dp))
-            }
+                is CarsScreenState.Initial,
+                is CarsScreenState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
 
-            itemsIndexed(
-                items = state.allCars,
-                key = {_, car: Car -> car.id}
-            ) { index, car ->
-                CarCard(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    car = car,
-                    onCarClick = onCarClick
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
+                is CarsScreenState.Error -> {
+                    val error = (state as CarsScreenState.Error).message
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+
+                is CarsScreenState.Content -> {
+                    val cars = (state as CarsScreenState.Content).cars
+
+                    LazyColumn {
+                        item { Spacer(modifier = modifier.height(14.dp)) }
+
+                        item {
+                            SearchFilters(
+                                onButtonClick = {},
+                                onQueryChange = {},
+                                onCalendarClick = {}
+                            )
+                        }
+
+                        item { Spacer(modifier = modifier.height(14.dp)) }
+
+                        itemsIndexed(
+                            items = cars,
+                            key = { _, car: Car -> car.id }
+                        ) { _, car ->
+                            CarCard(
+                                modifier = modifier.fillMaxWidth(),
+                                car = car,
+                                onCarClick = { onCarClick(car) }
+                            )
+                        }
+
+                        item { Spacer(modifier = Modifier.height(8.dp)) }
+                    }
+                }
             }
         }
     }
-
 }
 
 
@@ -280,13 +299,13 @@ private fun SearchFilters(
 fun CarCard(
     modifier: Modifier = Modifier,
     car: Car,
-    onCarClick: () -> Unit
+    onCarClick: (Car) -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clickable { onCarClick },
+            .clickable { onCarClick(car) },
         shape = RoundedCornerShape(12.dp),
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -302,12 +321,12 @@ fun CarCard(
 
 
             AsyncImage(
-                model = "https://shift-intensive" + car.image.first { it.isCover }.url,
+                model = "https://shift-intensive.ru/api" + car.media.first { it.isCover }.url,
                 contentDescription = car.name,
                 modifier = Modifier
                     .size(100.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
 
             Spacer(modifier = Modifier.width(12.dp))

@@ -1,17 +1,17 @@
 package com.sobolev.carsappshift2025.data.mapper
 
-import com.sobolev.carsappshift2025.data.local.models.CarDbModel
-import com.sobolev.carsappshift2025.data.local.models.MediaDbModel
 import com.sobolev.carsappshift2025.data.network.dto.CarDto
 import com.sobolev.carsappshift2025.data.network.dto.MediaDto
+import com.sobolev.carsappshift2025.domain.entities.Car
+import com.sobolev.carsappshift2025.domain.entities.Media
 
 
-fun CarDto.toDbModel(): CarDbModel {
-    return CarDbModel(
+fun CarDto.toDomain(): Car {
+    return Car(
         id = id,
         name = name,
         brand = brand,
-        media = image.map { it.toDbModel() },
+        media = image.map { it.toDomain() },
         transmission = transmission,
         price = price,
         location = location,
@@ -21,8 +21,8 @@ fun CarDto.toDbModel(): CarDbModel {
     )
 }
 
-fun MediaDto.toDbModel(): MediaDbModel {
-    return MediaDbModel(
+fun MediaDto.toDomain(): Media {
+    return Media(
         url = url,
         isCover = isCover
     )
